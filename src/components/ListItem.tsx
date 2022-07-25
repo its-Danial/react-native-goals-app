@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Touchable, TouchableOpacity } from "react-native";
 
 type ListItemProps = {
   text: string;
