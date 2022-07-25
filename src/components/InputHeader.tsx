@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Pressable } from "react-native";
 
 type InputHeaderProps = {
   onButtonPressHandler: (inputText: string) => void;
@@ -14,6 +14,7 @@ const InputHeader: FC<InputHeaderProps> = (props) => {
 
   const onPressHandler = () => {
     props.onButtonPressHandler(textInputText);
+    setTextInputText("");
   };
   return (
     <View className="flex-row mt-5 pb-6 items-center border-b-2 border-gray-500">
@@ -22,12 +23,12 @@ const InputHeader: FC<InputHeaderProps> = (props) => {
         className="flex-1 border-2 rounded h-10 border-gray-500 p-2 bg-slate-700 placeholder:text-white text-white"
         placeholder="Add Item"
         placeholderTextColor={"white"}
+        value={textInputText}
       />
-      <View className="bg-slate-700 rounded-md ml-2 p-3">
-        <TouchableOpacity onPress={onPressHandler}>
-          <Text className="text-white font-semibold px-2">Add</Text>
-        </TouchableOpacity>
-      </View>
+
+      <Pressable className="bg-slate-700 active:bg-slate-500 rounded-md ml-2 p-3" onPress={onPressHandler}>
+        <Text className="text-white font-semibold px-2 ">Add</Text>
+      </Pressable>
     </View>
   );
 };
