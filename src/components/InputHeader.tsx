@@ -1,8 +1,10 @@
 import { FC, useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Pressable } from "react-native";
+import { Pressable, Text, TextInput, View, Modal, SafeAreaView, Image } from "react-native";
 
 type InputHeaderProps = {
   onButtonPressHandler: (inputText: string) => void;
+  showModal: boolean;
+  onCloseModal: () => void;
 };
 
 const InputHeader: FC<InputHeaderProps> = (props) => {
@@ -16,20 +18,31 @@ const InputHeader: FC<InputHeaderProps> = (props) => {
     props.onButtonPressHandler(textInputText);
     setTextInputText("");
   };
-  return (
-    <View className="flex-row mt-5 pb-6 items-center border-b-2 border-gray-500">
-      <TextInput
-        onChangeText={onTextChangeHandler}
-        className="flex-1 border-2 rounded h-10 border-gray-500 p-2 bg-slate-700 placeholder:text-white text-white"
-        placeholder="Add Item"
-        placeholderTextColor={"white"}
-        value={textInputText}
-      />
 
-      <Pressable className="bg-slate-700 active:bg-slate-500 rounded-md ml-2 p-3" onPress={onPressHandler}>
-        <Text className="text-white font-semibold px-2 ">Add</Text>
-      </Pressable>
-    </View>
+  const onCancelHandler = () => {
+    props.onCloseModal();
+  };
+  return (
+    <Modal visible={props.showModal} animationType="slide">
+      <SafeAreaView className="flex-col flex-1 relative space-y-8 bg-slate-900 justify-center items-center">
+        <Image source={require("../../assets/images/white-logo.png")} className="w-[150px] h-[150px]" />
+        <TextInput
+          onChangeText={onTextChangeHandler}
+          className="border-2 rounded  w-[90%] h-12 border-gray-500 p-2 bg-slate-700 placeholder:text-white text-white"
+          placeholder="Add Item"
+          placeholderTextColor={"white"}
+          value={textInputText}
+        />
+        <View className="flex-row w-[90%] justify-evenly">
+          <Pressable className="bg-slate-700 active:bg-slate-500 w-24 rounded-md p-3" onPress={onCancelHandler}>
+            <Text className="text-white font-semibold px-2 text-center ">Cancel</Text>
+          </Pressable>
+          <Pressable className="bg-slate-600 active:bg-slate-500 w-24 rounded-md  p-3" onPress={onPressHandler}>
+            <Text className="text-white font-semibold text-center px-2 ">Add</Text>
+          </Pressable>
+        </View>
+      </SafeAreaView>
+    </Modal>
   );
 };
 export default InputHeader;
